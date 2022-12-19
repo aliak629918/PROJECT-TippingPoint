@@ -2,10 +2,30 @@ POST http://localhost:3001/api/items
 content-type: application/json
 
 {
-"name" : "microwave",
-"category": "kitchenware"
+"name" : "microwave3",
+"category": "kitchenware",
+"description": "a micro",
+"image":"a url",
+"tippingDate": "2022-12-21T15:13:13.950Z"
 }
+
+
 
 ###
 
 GET http://localhost:3001/api/items
+
+###
+
+GET http://localhost:3001/api/items/63a081fa078260742e556f0
+
+###
+
+DELETE  http://localhost:3001/api/items/63a08202078260742e556f06
+
+###
+
+PATCH http://localhost:3001/api/items/63a081fa078260742e556f04
+
+
+{"name": "microwave 2.0"}

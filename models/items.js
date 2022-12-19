@@ -19,13 +19,14 @@ const itemSchema = new mongoose.Schema({
   description: String,
   createdAt: Date,
   image: String,
-  tippingDate: Date,
+  tippingDate: String,
 });
 
 itemSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject.__v;
+    delete returnedObject._id;
   },
 });
 
