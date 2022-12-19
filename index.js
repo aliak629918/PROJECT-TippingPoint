@@ -1,11 +1,34 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const mongoose = require('mongoose')
 
-let items = [
-  { id: 1, name: "table", category: "furniture" },
-  { id: 2, name: "TV", category: "electronics" },
-];
+
+const url =
+  `mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority`
+
+mongoose.connect(url)
+
+const itemSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  createdAt: Date,
+  image: String,
+  tippingDate: Date
+})
+itemSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.__v
+  }
+})
+
+const Item = mongoose.model('Item', itemSchema)
+
+// let items = [
+//   { id: 1, name: "table", category: "furniture" },
+//   { id: 2, name: "TV", category: "electronics" },
+// ];
 app.use(cors());
 app.use(express.json());
 
@@ -14,7 +37,9 @@ app.get("/", (request, response) => {
 });
 
 app.get("/api/items", (request, response) => {
-  response.json(items);
+  Item.find({}).then(items => {
+    response.json(items);
+  })
 });
 
 app.get("/api/items/:id", (request, response) => {
