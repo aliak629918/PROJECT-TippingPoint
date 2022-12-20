@@ -22,11 +22,11 @@ GET http://localhost:3001/api/items
 
 ###
 
-GET http://localhost:3001/api/items/63a081fa078260742e556f04
+GET http://localhost:3001/api/items/63a081fa078260742e556f0
 
 ###
 
-DELETE  http://localhost:3001/api/items/63a08202078260742e556f06
+DELETE  http://localhost:3001/api/items/63a04ccc1a434f4fc588a002
 
 ###
 
@@ -34,3 +34,13 @@ PATCH http://localhost:3001/api/items/63a081fa078260742e556f04
 
 
 {"name": "microwave 2.0"}
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+  {
+    "username": "ali-user",
+    "name": "ali",
+    "password": "password"
+  }

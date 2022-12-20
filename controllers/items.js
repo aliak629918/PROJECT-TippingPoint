@@ -1,4 +1,4 @@
-const itemSchema = require("../models/models");
+const itemSchema = require("../models/items");
 
 const getAllItems = (request, response) => {
   itemSchema.find({}).then((items) => {
@@ -57,6 +57,7 @@ const postItems = (request, response) => {
     tippingDate: body.tippingDate,
   });
   item.save().then((savedItem) => {
+    response.status(201);
     response.json(savedItem);
   });
 };

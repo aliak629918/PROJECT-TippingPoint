@@ -15,7 +15,11 @@ const {
   getItemsById,
   postItems,
   updateItems,
-} = require("./controllers/controllers");
+} = require("./controllers/items");
+
+const {postUsers} = require("./controllers/users")
+
+app.post("/api/users" , postUsers)
 
 app.get("/api/items", getAllItems);
 
