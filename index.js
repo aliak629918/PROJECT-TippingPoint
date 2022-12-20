@@ -3,6 +3,15 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const Item = require("./models/items");
+app.use(
+  cors({
+    origin:
+      "mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority",
+    credentials: true,
+  })
+);
+app.use(cors({ origin: true, credentials: true }));
+
 // const mongoose = require("mongoose");
 
 // const url = `mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority`;

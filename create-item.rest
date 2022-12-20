@@ -17,7 +17,7 @@ GET http://localhost:3001/api/items
 
 ###
 
-GET http://localhost:3001/api/items/63a081fa078260742e556f0
+GET http://localhost:3001/api/items/63a04ccc1a434f4fc588a002
 
 ###
 
