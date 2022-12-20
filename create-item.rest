@@ -1,8 +1,13 @@
+GET http://localhost:3001/api
+content-type: application/json
+
+
+###
 POST http://localhost:3001/api/items
 content-type: application/json
 
 {
-"name" : "microwave3",
+"name" : "not a microwave",
 "category": "kitchenware",
 "description": "a micro",
 "image":"a url",
@@ -17,7 +22,7 @@ GET http://localhost:3001/api/items
 
 ###
 
-GET http://localhost:3001/api/items/63a081fa078260742e556f0
+GET http://localhost:3001/api/items/63a081fa078260742e556f04
 
 ###
 

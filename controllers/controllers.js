@@ -1,27 +1,14 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const Item = require("./models/items");
-// const mongoose = require("mongoose");
+const itemSchema = require("../models/models");
 
-// const url = `mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority`;
-
-app.use(cors());
-app.use(express.json());
-
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
-
-app.get("/api/items", (request, response) => {
-  Item.find({}).then((items) => {
+const getAllItems = (request, response) => {
+  itemSchema.find({}).then((items) => {
     response.json(items);
   });
-});
+};
 
-app.get("/api/items/:id", (request, response) => {
-  Item.findById(request.params.id)
+const getItemsById = (request, response) => {
+  itemSchema
+    .findById(request.params.id)
     .then((item) => {
       if (item) {
         response.json(item);
@@ -33,10 +20,11 @@ app.get("/api/items/:id", (request, response) => {
       console.log(err);
       response.status(500).send({ msg: "Internal Server Error" });
     });
-});
+};
 
-app.delete("/api/items/:id", (request, response) => {
-  Item.findByIdAndRemove(request.params.id)
+const deleteItemById = (request, response) => {
+  itemSchema
+    .findByIdAndRemove(request.params.id)
     .then((result) => {
       response.status(204).send({ msg: "Item Deleted" });
     })
@@ -44,11 +32,9 @@ app.delete("/api/items/:id", (request, response) => {
       console.log(err);
       response.status(404).send({ msg: "Item not found" });
     });
-});
+};
 
-app.post("/api/items", (request, response) => {
-  // const maxId = items.length > 0 ? Math.max(...items.map((i) => i.id)) : 0;
-
+const postItems = (request, response) => {
   const body = request.body;
 
   if (
@@ -62,7 +48,7 @@ app.post("/api/items", (request, response) => {
       error: "parameters missing",
     });
   }
-  const item = new Item({
+  const item = new itemSchema({
     name: body.name,
     category: body.category,
     description: body.description,
@@ -73,9 +59,9 @@ app.post("/api/items", (request, response) => {
   item.save().then((savedItem) => {
     response.json(savedItem);
   });
-});
+};
 
-app.patch("/api/items/:id", (request, response) => {
+const updateItems = (request, response) => {
   const body = request.body;
 
   const item = {
@@ -85,15 +71,20 @@ app.patch("/api/items/:id", (request, response) => {
     image: body.image,
     tippingDate: body.tippingDate,
   };
-  Item.findByIdAndUpdate(request.params.id, item, { new: true })
+  itemSchema
+    .findByIdAndUpdate(request.params.id, item, { new: true })
     .then((updatedItem) => {
       response.json(updatedItem);
     })
     .catch((err) => {
       response.status(500).send({ msg: "Internal Server Error" });
     });
-});
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+};
+
+module.exports = {
+  getAllItems,
+  deleteItemById,
+  getItemsById,
+  postItems,
+  updateItems,
+};
