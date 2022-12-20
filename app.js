@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (request, response) => {
+app.get("/",(request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
@@ -19,7 +19,7 @@ const {
 
 const {postUsers} = require("./controllers/users")
 
-app.post("/api/users" , postUsers)
+app.post("/api/users", postUsers)
 
 app.get("/api/items", getAllItems);
 

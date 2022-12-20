@@ -7,7 +7,7 @@ POST http://localhost:3001/api/items
 content-type: application/json
 
 {
-"name" : "not a microwave",
+"name" : "an experimental microwave",
 "category": "kitchenware",
 "description": "a micro",
 "image":"a url",
