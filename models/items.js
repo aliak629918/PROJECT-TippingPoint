@@ -1,18 +1,5 @@
 const mongoose = require("mongoose");
 
-const url = process.env.MONGODB_URI;
-
-console.log("connecting to", url);
-
-mongoose
-  .connect(url)
-  .then((result) => {
-    console.log("connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB:", error.message);
-  });
-
 const itemSchema = new mongoose.Schema({
   name: String,
   category: String,
@@ -20,6 +7,10 @@ const itemSchema = new mongoose.Schema({
   createdAt: Date,
   image: String,
   tippingDate: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 itemSchema.set("toJSON", {

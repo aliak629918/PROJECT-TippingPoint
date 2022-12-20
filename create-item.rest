@@ -1,8 +1,13 @@
+GET http://localhost:3001/api
+content-type: application/json
+
+
+###
 POST http://localhost:3001/api/items
 content-type: application/json
 
 {
-"name" : "microwave3",
+"name" : "an experimental microwave",
 "category": "kitchenware",
 "description": "a micro",
 "image":"a url",
@@ -21,7 +26,7 @@ GET http://localhost:3001/api/items/63a04ccc1a434f4fc588a002
 
 ###
 
-DELETE  http://localhost:3001/api/items/63a08202078260742e556f06
+DELETE  http://localhost:3001/api/items/63a04ccc1a434f4fc588a002
 
 ###
 
@@ -29,3 +34,13 @@ PATCH http://localhost:3001/api/items/63a081fa078260742e556f04
 
 
 {"name": "microwave 2.0"}
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+  {
+    "username": "ali-user",
+    "name": "ali",
+    "password": "password"
+  }
