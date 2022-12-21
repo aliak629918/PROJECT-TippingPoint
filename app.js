@@ -10,6 +10,7 @@ app.get("/",(request, response) => {
 });
 
 const {
+  filterByCategory,
   getAllItems,
   deleteItemById,
   getItemsById,
@@ -30,5 +31,7 @@ app.delete("/api/items/:id", deleteItemById);
 app.post("/api/items", postItems);
 
 app.patch("/api/items/:id", updateItems);
+
+app.get("api/items", filterByCategory)
 
 module.exports = app;

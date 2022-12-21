@@ -1,24 +1,27 @@
+const { request } = require("../app");
+const items = require("../models/items");
 const itemSchema = require("../models/items");
 const userSchema = require("../models/user");
 
 const getAllItems = async (request, response) => {
-  const handleQuerySort = (query) => {
-    try{
-      const toJSONString = ("{" + query + "}").replace(/(\w+:)|(\w+ :)/g, (matched => {
+  const handleQuery = (query) => {
+    try {
+      const toJSONString = ("{" + query + "}").replace(
+        /(\w+:)|(\w+ :)/g,
+        (matched) => {
           return '"' + matched.substring(0, matched.length - 1) + '":';
-      }));
-  
-      return JSON.parse(toJSONString);
+        }
+      );
 
-    }catch(err){
-      return JSON.parse("{}"); 
+      return JSON.parse(toJSONString);
+    } catch (err) {
+      return JSON.parse("{}");
     }
-  }
-  if (handleQuerySort(request.query.sort) === {}) {
-    const sort = {createdAt: -1}
-  } const sort = handleQuerySort(request.query.sort)
-  const items = await itemSchema.find().sort(sort);
-    response.json(items);
+  };
+  const sort = handleQuery(request.query.sort);
+  // const filter = handleQuery(request.query.filter)
+  const items = await itemSchema.find(request.query.filter).sort(sort);
+  response.json(items);
 };
 
 const getItemsById = (request, response) => {
@@ -63,7 +66,7 @@ const postItems = (request, response) => {
       error: "parameters missing",
     });
   }
-const user = userSchema.findById(body.userId)
+  const user = userSchema.findById(body.userId);
 
   const item = new itemSchema({
     name: body.name,
@@ -75,12 +78,10 @@ const user = userSchema.findById(body.userId)
     user: user._id,
   });
   item.save().then((savedItem) => {
-    
-  
     response.status(201);
     response.json(savedItem);
-});
-}
+  });
+};
 
 const updateItems = (request, response) => {
   const body = request.body;
@@ -102,7 +103,17 @@ const updateItems = (request, response) => {
     });
 };
 
+const filterByCategory = async (req, res, next) => {
+  const items = await itemSchema.find({
+    $elemMatch: {
+      "category": req.query,
+    },
+  });
+  res.send(items);
+};
+
 module.exports = {
+  filterByCategory,
   getAllItems,
   deleteItemById,
   getItemsById,

@@ -37,6 +37,22 @@ describe("GET/api/items", () => {
         });
       });
   });
+  test.only("GET: 200 - an array of items sorted by date by default", () => {
+    return request(app)
+      .get("/api/items")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toBeSortedBy("createdAt", { ascending: true });
+      });
+  })
+  test("GET: 200 - can sort array of items by name DESC", () => {
+    return request(app)
+      .get("/api/items?sort=name:-1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toBeSortedBy("name", { descending: true });
+      });
+  });
 });
 
 describe("GET/api/items/:id", () => {
@@ -148,7 +164,7 @@ describe("DELETE/api/items/:id", () => {
 //   });
 // });
 
-describe.only("when there is initially one user in db", () => {
+describe("when there is initially one user in db", () => {
   beforeEach(async () => {
     // await User.deleteMany({});
 
@@ -182,3 +198,5 @@ describe.only("when there is initially one user in db", () => {
     // })
   });
 });
+
+
