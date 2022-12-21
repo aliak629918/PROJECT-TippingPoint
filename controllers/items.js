@@ -1,10 +1,24 @@
 const itemSchema = require("../models/items");
-const userSchema = require("../models/users");
+const userSchema = require("../models/user");
 
-const getAllItems = (request, response) => {
-  itemSchema.find({}).then((items) => {
+const getAllItems = async (request, response) => {
+  const handleQuerySort = (query) => {
+    try{
+      const toJSONString = ("{" + query + "}").replace(/(\w+:)|(\w+ :)/g, (matched => {
+          return '"' + matched.substring(0, matched.length - 1) + '":';
+      }));
+  
+      return JSON.parse(toJSONString);
+
+    }catch(err){
+      return JSON.parse("{}"); 
+    }
+  }
+  if (handleQuerySort(request.query.sort) === {}) {
+    const sort = {createdAt: -1}
+  } const sort = handleQuerySort(request.query.sort)
+  const items = await itemSchema.find().sort(sort);
     response.json(items);
-  });
 };
 
 const getItemsById = (request, response) => {
@@ -35,7 +49,7 @@ const deleteItemById = (request, response) => {
     });
 };
 
-const postItems = async (request, response) => {
+const postItems = (request, response) => {
   const body = request.body;
 
   if (
@@ -49,7 +63,7 @@ const postItems = async (request, response) => {
       error: "parameters missing",
     });
   }
-const user = await userSchema.findById(body.userId)
+const user = userSchema.findById(body.userId)
 
   const item = new itemSchema({
     name: body.name,
@@ -60,13 +74,13 @@ const user = await userSchema.findById(body.userId)
     tippingDate: body.tippingDate,
     user: user._id,
   });
-  // item.save().then((savedItem) => {
-    const savedItem = await item.save()
-    )
+  item.save().then((savedItem) => {
+    
+  
     response.status(201);
     response.json(savedItem);
-  });
-};
+});
+}
 
 const updateItems = (request, response) => {
   const body = request.body;
