@@ -1,3 +1,4 @@
+npm start
 GET http://localhost:3001/api
 content-type: application/json
 
@@ -19,6 +20,8 @@ content-type: application/json
 ###
 
 GET http://localhost:3001/api/items
+###
+GET http://localhost:3001/
 
 ###
 

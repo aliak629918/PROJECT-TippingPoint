@@ -35,7 +35,7 @@ const deleteItemById = (request, response) => {
     });
 };
 
-const postItems = (request, response) => {
+const postItems = async (request, response) => {
   const body = request.body;
 
   if (
@@ -49,6 +49,8 @@ const postItems = (request, response) => {
       error: "parameters missing",
     });
   }
+const user = await userSchema.findById(body.userId)
+
   const item = new itemSchema({
     name: body.name,
     category: body.category,
@@ -58,7 +60,9 @@ const postItems = (request, response) => {
     tippingDate: body.tippingDate,
     user: user._id,
   });
-  item.save().then((savedItem) => {
+  // item.save().then((savedItem) => {
+    const savedItem = await item.save()
+    )
     response.status(201);
     response.json(savedItem);
   });
