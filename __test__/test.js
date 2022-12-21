@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const request = require("supertest");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+// const helper = require("./helper");
 
 const app = require("../app");
 
@@ -127,22 +128,57 @@ describe("DELETE/api/items/:id", () => {
       });
   });
 });
-describe.only("POST/api/users", () => {
-  test("POST: 201 - Adds a new user to the Atlas DB",  () => {
-    return request(app)
-      .post(`/api/users`)
-      .send({
-        username: "the-ali2",
-        name: "ali",
-      })
+// describe.only("POST/api/users", () => {
+//   test("POST: 201 - Adds a new user to the Atlas DB",  () => {
+//     return request(app)
+//       .post(`/api/users`)
+//       .send({
+//         username: "the-ali2",
+//         name: "ali",
+//       })
+//       .expect(201)
+
+//       .then((res) => {
+//         expect(res.body).toMatchObject({
+//           username: "the-ali",
+//           name: "ali",
+//           password: "password",
+//         });
+//       });
+//   });
+// });
+
+describe.only("when there is initially one user in db", () => {
+  beforeEach(async () => {
+    // await User.deleteMany({});
+
+    const passwordHash = await bcrypt.hash("sekret", 10);
+    // const user = new User({ username: "root", passwordHash });
+
+    // await user.save();
+  });
+
+  test("creation succeeds with a fresh username", async () => {
+    // const usersAtStart = await helper.usersInDb();
+
+    const newUser = {
+      username: "Hermione10",
+      name: "Daniel",
+      password: "cats",
+    };
+
+    return await request(app)
+      .post("/api/users")
+      .send(newUser)
       .expect(201)
-     
-      .then((res) => {
-        expect(res.body).toMatchObject({
-          username: "the-ali",
-          name: "ali",
-          password: "password",
-        });
-      });
+      .expect("Content-Type", /application\/json/);
+    // .then(() => {
+
+    //   const usersAtEnd = await helper.usersInDb();
+    //   expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
+
+    //   const usernames = usersAtEnd.map((u) => u.username);
+    //   expect(usernames).toContain(newUser.username);
+    // })
   });
 });

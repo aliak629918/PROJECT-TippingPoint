@@ -1,4 +1,5 @@
 const itemSchema = require("../models/items");
+const userSchema = require("../models/users");
 
 const getAllItems = (request, response) => {
   itemSchema.find({}).then((items) => {
@@ -55,6 +56,7 @@ const postItems = (request, response) => {
     createdAt: new Date(),
     image: body.image,
     tippingDate: body.tippingDate,
+    user: user._id,
   });
   item.save().then((savedItem) => {
     response.status(201);
