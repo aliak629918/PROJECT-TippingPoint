@@ -1,0 +1,46 @@
+npm start
+GET http://localhost:3001/api
+content-type: application/json
+
+###
+POST http://localhost:3001/api/items
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbiIsImlkIjoiNjNhNDNjNDgwNjA0Nzc3MTRiMThhZGYwIiwiaWF0IjoxNjcxNzIzNDM4fQ.7fqK38HbMyErxLlQ_VcB8eW6_SSIC-LBMtRH01HdCB8
+
+{
+"name" : "is it lunchtime yet",
+"category": ":(",
+"description": "a micro",
+"image":"a url",
+"tippingDate": "2022-12-21T15:13:13.950Z",
+"userId": "63a2d3be2eb3c0c963c593c9"
+}
+
+###
+GET http://localhost:3001/api/items
+
+###
+GET http://localhost:3001/api/items?category=electronics
+
+###
+GET http://localhost:3001/api/items?sort=name:1
+
+###
+GET http://localhost:3001/api/items?sort=category:1
+
+###
+GET http://localhost:3001/
+
+###
+GET http://localhost:3001/api/items/63a081fa078260742e556f04
+
+###
+
+DELETE  http://localhost:3001/api/items/63a081fa078260742e556f04
+
+###
+
+PATCH http://localhost:3001/api/items/63a081fa078260742e556f04
+
+
+{"name": "microwave 2.0"}
