@@ -11,3 +11,14 @@ content-type: application/json
 
 ###
 GET http://localhost:3001/api/users
+
+###
+POST http://localhost:3001/api/users
+content-type: application/json
+
+  {
+    "username": "yoshi",
+    "email": "someone@somewhere.com",
+    "name": "yoshi",
+    "password": "password"
+  }

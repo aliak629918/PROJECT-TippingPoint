@@ -5,12 +5,12 @@ content-type: application/json
 ###
 POST http://localhost:3001/api/items
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbiIsImlkIjoiNjNhNDNjNDgwNjA0Nzc3MTRiMThhZGYwIiwiaWF0IjoxNjcxNzIzNDM4fQ.7fqK38HbMyErxLlQ_VcB8eW6_SSIC-LBMtRH01HdCB8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Inlvc2hpIiwiaWQiOiI2M2E0ODVjYzc1NzY2ZDY1M2M1ZjdhNGQiLCJpYXQiOjE2NzE3MjY1NjZ9.89314c5vkNjdweUyG1VQ-73vjNI3DkXcH_xdOwTtoCI
 
 {
-"name" : "is it lunchtime yet",
-"category": ":(",
-"description": "a micro",
+"name" : "New Cat Bowl - Medium",
+"category": "Cat Stuff",
+"description": "Cat stuff",
 "image":"a url",
 "tippingDate": "2022-12-21T15:13:13.950Z",
 "userId": "63a2d3be2eb3c0c963c593c9"
