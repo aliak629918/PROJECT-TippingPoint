@@ -7,10 +7,10 @@ const itemSchema = new mongoose.Schema({
   createdAt: Date,
   image: String,
   tippingDate: String,
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User"
-  // }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 itemSchema.set("toJSON", {

@@ -16,10 +16,12 @@ const {
   postItems,
   updateItems,
 } = require("./controllers/items");
-
-const { postUsers } = require("./controllers/users");
+const { postUsers, getUsers } = require("./controllers/users");
+const postLogin = require("./controllers/login");
 
 app.post("/api/users", postUsers);
+app.get("/api/users", getUsers);
+app.use("/api/login", postLogin);
 
 app.get("/api/items", getAllItems);
 

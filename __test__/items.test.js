@@ -37,14 +37,14 @@ describe("GET/api/items", () => {
         });
       });
   });
-  test.only("GET: 200 - an array of items sorted by date by default", () => {
+  test("GET: 200 - an array of items sorted by date by default", () => {
     return request(app)
       .get("/api/items")
       .expect(200)
       .then(({ body }) => {
         expect(body).toBeSortedBy("createdAt", { ascending: true });
       });
-  })
+  });
   test("GET: 200 - can sort array of items by name DESC", () => {
     return request(app)
       .get("/api/items?sort=name:-1")
@@ -57,19 +57,19 @@ describe("GET/api/items", () => {
 
 describe("GET/api/items/:id", () => {
   test("GET: 200 - Should return an individual matching item", () => {
-    const item_id = "63a08145841518b9121e6550";
+    const item_id = "63a081fa078260742e556f04";
     return request(app)
       .get(`/api/items/${item_id}`)
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
-          name: "Original microwave",
-          category: "electronics",
-          createdAt: "2022-12-19T15:20:37.308Z",
+          name: "microwave 2.0",
+          category: "kitchenware",
+          description: "a micro",
+          createdAt: "2022-12-19T15:23:38.832Z",
           image: "a url",
           tippingDate: "2022-12-21T15:13:13.950Z",
-          description: "a micro",
-          id: "63a08145841518b9121e6550",
+          id: "63a081fa078260742e556f04",
         });
       });
   });
@@ -144,59 +144,3 @@ describe("DELETE/api/items/:id", () => {
       });
   });
 });
-// describe.only("POST/api/users", () => {
-//   test("POST: 201 - Adds a new user to the Atlas DB",  () => {
-//     return request(app)
-//       .post(`/api/users`)
-//       .send({
-//         username: "the-ali2",
-//         name: "ali",
-//       })
-//       .expect(201)
-
-//       .then((res) => {
-//         expect(res.body).toMatchObject({
-//           username: "the-ali",
-//           name: "ali",
-//           password: "password",
-//         });
-//       });
-//   });
-// });
-
-describe("when there is initially one user in db", () => {
-  beforeEach(async () => {
-    // await User.deleteMany({});
-
-    const passwordHash = await bcrypt.hash("sekret", 10);
-    // const user = new User({ username: "root", passwordHash });
-
-    // await user.save();
-  });
-
-  test("creation succeeds with a fresh username", async () => {
-    // const usersAtStart = await helper.usersInDb();
-
-    const newUser = {
-      username: "Hermione10",
-      name: "Daniel",
-      password: "cats",
-    };
-
-    return await request(app)
-      .post("/api/users")
-      .send(newUser)
-      .expect(201)
-      .expect("Content-Type", /application\/json/);
-    // .then(() => {
-
-    //   const usersAtEnd = await helper.usersInDb();
-    //   expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
-
-    //   const usernames = usersAtEnd.map((u) => u.username);
-    //   expect(usernames).toContain(newUser.username);
-    // })
-  });
-});
-
-

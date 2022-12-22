@@ -1,7 +1,17 @@
 const { request } = require("../app");
 const items = require("../models/items");
 const itemSchema = require("../models/items");
+const User = require("../models/user");
 const userSchema = require("../models/user");
+const jwt = require("jsonwebtoken");
+
+const getTokenFrom = (request) => {
+  const authorization = request.get("authorization");
+  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+    return authorization.substring(7);
+  }
+  return null;
+};
 
 const getAllItems = async (request, response) => {
   const handleQuery = (query) => {
@@ -12,15 +22,17 @@ const getAllItems = async (request, response) => {
           return '"' + matched.substring(0, matched.length - 1) + '":';
         }
       );
-
       return JSON.parse(toJSONString);
     } catch (err) {
       return JSON.parse("{}");
     }
   };
-  const sort = handleQuery(request.query.sort);
 
-  const items = await itemSchema.find({ ...request.query }).sort(sort);
+  const sort = handleQuery(request.query.sort);
+  const items = await itemSchema
+    .find({ ...request.query })
+    .sort(sort)
+    .populate("user", { username: 1 });
   response.json(items);
 };
 
@@ -52,8 +64,14 @@ const deleteItemById = (request, response) => {
     });
 };
 
-const postItems = (request, response) => {
+const postItems = async (request, response) => {
   const body = request.body;
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: "token missing or invalid" });
+  }
+  const user = await User.findById(decodedToken.id);
 
   if (
     !body.name ||
@@ -66,7 +84,7 @@ const postItems = (request, response) => {
       error: "parameters missing",
     });
   }
-  const user = userSchema.findById(body.userId);
+  // const user = userSchema.findById(body.userId);
 
   const item = new itemSchema({
     name: body.name,
@@ -77,10 +95,17 @@ const postItems = (request, response) => {
     tippingDate: body.tippingDate,
     user: user._id,
   });
-  item.save().then((savedItem) => {
-    response.status(201);
-    response.json(savedItem);
-  });
+
+  const savedItem = await item.save();
+  user.items = user.items.concat(savedItem._id);
+  await user.save();
+
+  response.json(savedItem);
+
+  // item.save().then((savedItem) => {
+  //   response.status(201);
+  //   response.json(savedItem);
+  // });
 };
 
 const updateItems = (request, response) => {
@@ -103,20 +128,20 @@ const updateItems = (request, response) => {
     });
 };
 
-const filterByCategory = async (req, res, next) => {
-  const category = req.query.category;
-  const items = await itemSchema.aggregate([
-    {
-      $match: {
-        category: req.query.category,
-      },
-    },
-  ]);
-  res.send(items);
-};
+// const filterByCategory = async (req, res, next) => {
+//   const category = req.query.category;
+//   const items = await itemSchema.aggregate([
+//     {
+//       $match: {
+//         category: req.query.category,
+//       },
+//     },
+//   ]);
+//   res.send(items);
+// };
 
 module.exports = {
-  filterByCategory,
+  // filterByCategory,
   getAllItems,
   deleteItemById,
   getItemsById,
