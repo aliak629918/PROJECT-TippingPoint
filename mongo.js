@@ -15,33 +15,24 @@ const itemSchema = new mongoose.Schema({
 });
 
 const Item = mongoose.model("Item", itemSchema);
-mongoose
-  .connect(uri)
-  .then((result) => {
-    console.log("connected");
-    // const item = new Item({
-    //   content: "Mongo is very hard",
-    //   date: new Date(),
-    //   important: true,
-    // });
-    // return item.save();
-    Item.find({content: "Mongo is very hard"}).then(result => {
-      result.forEach(item => {
-        console.log(item)
-      })
+mongoose.connect(uri).then((result) => {
+  console.log("connected");
+  // const item = new Item({
+  //   content: "Mongo is very hard",
+  //   date: new Date(),
+  //   important: true,
+  // });
+  // return item.save();
+  Item.find({ content: "Tipping Point" })
+    .then((result) => {
+      result.forEach((item) => {
+        console.log(item);
+      });
       return mongoose.connection.close();
-  })
-  // .then(() => {
-  //   console.log("item saved!");
-    
-  // })
-  .catch((err) => console.log(err));
+    })
+    // .then(() => {
+    //   console.log("item saved!");
 
-})
-
-
-
-
-
-
-
+    // })
+    .catch((err) => console.log(err));
+});

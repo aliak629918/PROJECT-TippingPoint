@@ -19,8 +19,8 @@ const getAllItems = async (request, response) => {
     }
   };
   const sort = handleQuery(request.query.sort);
-  // const filter = handleQuery(request.query.filter)
-  const items = await itemSchema.find(request.query.filter).sort(sort);
+
+  const items = await itemSchema.find({ ...request.query }).sort(sort);
   response.json(items);
 };
 
@@ -104,11 +104,14 @@ const updateItems = (request, response) => {
 };
 
 const filterByCategory = async (req, res, next) => {
-  const items = await itemSchema.find({
-    $elemMatch: {
-      "category": req.query,
+  const category = req.query.category;
+  const items = await itemSchema.aggregate([
+    {
+      $match: {
+        category: req.query.category,
+      },
     },
-  });
+  ]);
   res.send(items);
 };
 

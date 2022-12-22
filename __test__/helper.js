@@ -3,12 +3,12 @@ const User = require("../models/user");
 
 const initialItems = [
   {
-    content: "HTML is easy",
+    content: "Here is a toaster",
     date: new Date(),
     important: false,
   },
   {
-    content: "Browser can execute only Javascript",
+    content: "Here is a washing machine",
     date: new Date(),
     important: true,
   },
@@ -31,8 +31,6 @@ const usersInDb = async () => {
   const users = await User.find({});
   return users.map((u) => u.toJSON());
 };
-
-
 
 module.exports = {
   initialItems,

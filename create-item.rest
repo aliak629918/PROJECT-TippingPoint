@@ -26,7 +26,7 @@ GET http://localhost:3001/api/items?category=kitchenware
 
 ###
 
-GET http://localhost:3001/api/items?sort=name:1
+GET http://localhost:3001/api/items?=name:1
 ###
 GET http://localhost:3001/
 

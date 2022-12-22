@@ -5,12 +5,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/",(request, response) => {
+app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
 const {
-  filterByCategory,
   getAllItems,
   deleteItemById,
   getItemsById,
@@ -18,9 +17,9 @@ const {
   updateItems,
 } = require("./controllers/items");
 
-const {postUsers} = require("./controllers/users")
+const { postUsers } = require("./controllers/users");
 
-app.post("/api/users", postUsers)
+app.post("/api/users", postUsers);
 
 app.get("/api/items", getAllItems);
 
@@ -31,7 +30,5 @@ app.delete("/api/items/:id", deleteItemById);
 app.post("/api/items", postItems);
 
 app.patch("/api/items/:id", updateItems);
-
-app.get("api/items", filterByCategory)
 
 module.exports = app;
