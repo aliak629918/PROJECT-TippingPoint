@@ -3,10 +3,12 @@ const app = require("./app");
 const url = process.env.MONGODB_URI;
 require("dotenv").config();
 
-console.log("connecting to", url);
+console.log("connecting to mongo atlas");
 
 mongoose
-  .connect('mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority')
+  .connect(
+    "mongodb+srv://runtimeterror:runtimeterror@cluster0.r5rsumc.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then((result) => {
     console.log("connected to MongoDB");
     const PORT = process.env.PORT;

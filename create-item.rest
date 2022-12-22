@@ -22,16 +22,15 @@ content-type: application/json
 GET http://localhost:3001/api/items
 
 ###
-GET http://localhost:3001/api/items?category=kitchenware
+GET http://localhost:3001/api/items?category=electronics
 
 ###
-
 GET http://localhost:3001/api/items?=name:1
+
 ###
 GET http://localhost:3001/
 
 ###
-
 GET http://localhost:3001/api/items/63a04ccc1a434f4fc588a002
 
 ###
